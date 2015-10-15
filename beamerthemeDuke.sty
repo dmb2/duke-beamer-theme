@@ -1,0 +1,100 @@
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+\usepackage{etoolbox}
+\usepackage{xcolor}
+\usepackage{tikz}
+\useoutertheme[width=0pt]{sidebar}
+\useinnertheme{circles}
+% Set the fonts, Interstate for titles and garamond for everything
+% else. These are non-free fonts but Duke has a sitewide
+% license. Install them from the Duke website and compile the
+% presentation with xelatex
+\ifboolexpr{bool {xetex} or bool {luatex}}{
+  \usepackage{fontspec}
+  \setsansfont{Garamond 3 LT Std}
+  \setmonofont{Inconsolata}
+  \newfontfamily\Book{Interstate}
+  \setbeamerfont{title}{               family=\Book, size=\Large, shape=\scshape}
+  \setbeamerfont{author}{              family=\Book, size=\small}
+  \setbeamerfont{date}{                family=\Book, size=\small}
+  \setbeamerfont{section title}{       family=\Book, size=\Large, shape=\scshape}
+  \setbeamerfont{block title}{         family=\Book, size=\normalsize}
+  \setbeamerfont{block title alerted}{ family=\Book, size=\normalsize}
+  \setbeamerfont{subtitle}{            family=\Book, size=\fontsize{12}{14}}
+  \setbeamerfont{frametitle}{          family=\Book, size=\large, shape=\scshape}
+  \setbeamerfont{caption}{size=\small}
+  \setbeamerfont{caption name}{        family=\Book}
+  \setbeamerfont{description item}{    family=\Book}
+  \setbeamerfont{page number in head/foot}{size=\scriptsize}
+}
+
+%% These are the official colors, and they cannot be modified by the
+%% program (ie changing the opacity or saturation)
+\definecolor{Duke Blue}{HTML}{001A57}
+\definecolor{Blue Devil Blue}{HTML}{0736A4}
+%% These are the official recommendations for colors to go with the
+%% two official Duke colors. PMS is the Pantone Matching system index,
+%% so you can search the color to see what it should look like
+\definecolor{PMS Black 3}{HTML}{262626}
+\definecolor{PMS Cool Gray 3}{HTML}{E5E5E5}
+\definecolor{PMS Cool Gray 11}{HTML}{666666}
+\definecolor{PMS Cool Gray 7}{HTML}{B5B5B5}
+\definecolor{Light Gray}{HTML}{F5F5F5}
+
+% Blues
+\definecolor{PMS 294}{HTML}{003366}
+\definecolor{PMS 3015}{HTML}{235F9C}
+\definecolor{PMS 3005}{HTML}{0680CD}
+% Oranges
+\definecolor{PMS 166}{HTML}{D75404}
+\definecolor{PMS 1805}{HTML}{CC3300}
+\definecolor{PMS 157}{HTML}{F09905}
+
+% Global tweaks to the palette
+\setbeamercolor*{sidebar}{parent=palette primary}
+\setbeamercolor*{palette primary}{bg=Duke Blue,fg=white}
+\setbeamercolor*{palette secondary}{fg=PMS Cool Gray 3, bg=Blue Devil Blue}
+\setbeamercolor*{palette tertiary}{fg=PMS Cool Gray 3,bg=PMS 3015}
+\setbeamercolor*{palette quaternary}{fg=PMS Cool Gray 7, bg=PMS 294}
+\setbeamercolor*{palette sidebar primary}{bg=Duke Blue,fg=white}
+\setbeamercolor*{palette sidebar secondary}{fg=PMS Cool Gray 3, bg=Blue Devil Blue}
+\setbeamercolor*{palette sidebar tertiary}{fg=PMS Cool Gray 3,bg=PMS 3015}
+\setbeamercolor*{palette sidebar quaternary}{fg=PMS Cool Gray 7, bg=PMS 294}
+
+
+% Tweaks to specific elements on each page
+\setbeamercolor*{item}{fg=Duke Blue}
+\setbeamercolor*{frametitle}{parent=palette primary}
+\setbeamercolor*{title}{fg=Duke Blue}
+\setbeamercolor{normal text}{fg=PMS Black 3,bg=Light Gray}
+\setbeamercolor{alerted text}{fg=PMS 166}
+
+% Add an inverted logo to each slide
+\addtobeamertemplate{frametitle}{}{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north east,yshift=2pt] at (current page.north east) {\includegraphics[height=1cm]{logo_inverted}};
+\end{tikzpicture}}
+
+% remove navigation buttons
+\setbeamertemplate{navigation symbols}{}
+
+% add slide number
+\defbeamertemplate{footline}{customframe number}
+{
+  \hfill%
+  \usebeamercolor[bg]{palette primary}%
+  \usebeamerfont{page number in head/foot}%
+  \raisebox{2mm}[0pt][0pt]{
+    \begin{tikzpicture}[overlay]
+      %% \draw (0,0)--(10,0);
+      \filldraw (0,0) circle [radius=0.18] node[color=Light Gray] {\insertframenumber};
+    \end{tikzpicture}
+    \,\kern1em
+  }%
+}
+\setbeamertemplate{footline}[customframe number]
+
+\mode
+<all>
